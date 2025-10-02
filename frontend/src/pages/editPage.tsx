@@ -12,6 +12,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BikeType } from "../components/interfaces";
 import axios from "axios";
 import { getCookie } from "../components/cookieInfo";
+import { API_URL } from "../services";
 
 type Bike = {
   id: number;
@@ -46,15 +47,11 @@ export default function EditBikePage() {
     console.log("formData", formData);
     if (pathName === "edit") {
       axios
-        .patch(
-          `${process.env.REACT_APP_API_URL}/bikes/${formData.id}/`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${getCookie("access")}`,
-            },
-          }
-        )
+        .patch(`${API_URL}/bikes/${formData.id}/`, formData, {
+          headers: {
+            Authorization: `Bearer ${getCookie("access")}`,
+          },
+        })
         .then((res) => {
           navigate(`/view/${formData.id}/`, { state: { bike: formData } });
         })
@@ -67,7 +64,7 @@ export default function EditBikePage() {
 
     if (pathName === "add") {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/bikes/`, formData, {
+        .post(`${API_URL}/bikes/`, formData, {
           headers: {
             Authorization: `Bearer ${getCookie("access")}`,
           },
@@ -89,7 +86,7 @@ export default function EditBikePage() {
     if (pathName === "edit") {
       if (window.confirm("Are you sure you want to delete this bike?")) {
         axios
-          .delete(`${process.env.REACT_APP_API_URL}/bikes/${formData.id}/`, {
+          .delete(`${API_URL}/bikes/${formData.id}/`, {
             headers: {
               Authorization: `Bearer ${getCookie("access")}`,
             },

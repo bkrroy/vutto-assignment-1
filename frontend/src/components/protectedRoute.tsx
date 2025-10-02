@@ -3,6 +3,7 @@ import { getCookie } from "./cookieInfo";
 import { Navigate, Outlet } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../services";
 
 const ProtectedRoute = () => {
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const ProtectedRoute = () => {
   useEffect(() => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/auth/token/refresh/`,
+        `${API_URL}/auth/token/refresh/`,
         {
           refresh: getCookie("refresh"),
         },

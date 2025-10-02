@@ -12,8 +12,9 @@ import {
 import axios from "axios";
 import { getCookie } from "../components/cookieInfo";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../services";
 
-// process.env.REACT_APP_API_URL
+// API_URL
 
 export default function AuthForm() {
   const [tab, setTab] = useState<"login" | "register">("login");
@@ -28,7 +29,7 @@ export default function AuthForm() {
   useEffect(() => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URL}/auth/token/refresh/`,
+        `${API_URL}/auth/token/refresh/`,
         {
           refresh: getCookie("refresh"),
         },
@@ -57,7 +58,7 @@ export default function AuthForm() {
     e.preventDefault();
     if (tab === "login") {
       axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/token/`, {
+        .post(`${API_URL}/auth/token/`, {
           email: formData.email,
           password: formData.password,
         })
@@ -81,7 +82,7 @@ export default function AuthForm() {
         return;
       }
       axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/register/`, {
+        .post(`${API_URL}/auth/register/`, {
           email: formData.email,
           password: formData.password,
         })

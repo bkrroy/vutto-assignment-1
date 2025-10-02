@@ -16,6 +16,7 @@ import { BikeType } from "../components/interfaces";
 import { useNavigate } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
 import { getCookie } from "../components/cookieInfo";
+import { API_URL } from "../services";
 
 // Dummy data
 const bikes = [
@@ -97,12 +98,9 @@ export default function Dashboard() {
   useEffect(() => {
     if (!selected) {
       axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/bikes/?page=${page}&search=${debouncedTerm}`,
-          {
-            withCredentials: true,
-          }
-        )
+        .get(`${API_URL}/bikes/?page=${page}&search=${debouncedTerm}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           console.log("bikes");
           console.log(res.data.results);
@@ -115,14 +113,11 @@ export default function Dashboard() {
   useEffect(() => {
     if (selected) {
       axios
-        .get(
-          `${process.env.REACT_APP_API_URL}/bikes/mine/?page=${page}&search=${debouncedTerm}`,
-          {
-            headers: {
-              Authorization: `Bearer ${getCookie("access")}`,
-            },
-          }
-        )
+        .get(`${API_URL}/bikes/mine/?page=${page}&search=${debouncedTerm}`, {
+          headers: {
+            Authorization: `Bearer ${getCookie("access")}`,
+          },
+        })
         .then((res) => {
           console.log("bikes");
           console.log(res.data.results);
